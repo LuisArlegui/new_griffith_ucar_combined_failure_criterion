@@ -39,7 +39,7 @@ In addition to the reproducible R scripts, the repository includes an interactiv
 The repository allows users to:
 
 - Generate complete NGC–Úcar failure envelopes.
-- Visualise the criterion in both principal stress (\(\sigma_3\)–\(\sigma_1\)) and Mohr (\(\sigma_n\)–\(\tau\)) spaces.
+- Visualise the criterion in both principal stress ($\sigma_3–\sigma_1$) and Mohr ($\sigma_n–\tau$) spaces.
 - Export failure curves as CSV files.
 - Compare the criterion with laboratory triaxial tests.
 - Analyse depth-dependent fracture domains.
@@ -88,7 +88,7 @@ The left-hand panel contains all user-defined parameters.
 
 **Rock strength**
 
-The first section defines the uniaxial compressive strength ($begin:math:text$C\_0$end:math:text$) and the uniaxial tensile strength ($begin:math:text$T\_0$end:math:text$). These two parameters constitute the primary input required to construct the combined NGC–Úcar failure envelope.
+The first section defines the uniaxial compressive strength ($C_0$) and the uniaxial tensile strength ($T_0$). These two parameters constitute the primary input required to construct the combined NGC–Úcar failure envelope.
 
 **Curve density**
 
@@ -96,7 +96,7 @@ The second section controls the numerical resolution used to generate the NGC an
 
 **UC truncation**
 
-The third section allows the user to activate or deactivate the ductile-transition truncation applied to the Úcar criterion and to modify the corresponding $begin:math:text$\\sigma\_1\/\\sigma\_3$end:math:text$ limiting ratio.
+The third section allows the user to activate or deactivate the ductile-transition truncation applied to the Úcar criterion and to modify the corresponding $\sigma_1 / \sigma_3$ limiting ratio.
 
 **Plot appearance**
 
@@ -106,8 +106,8 @@ The final section provides options for modifying the colours used to display the
 
 The application generates:
 
-- the combined failure envelope in Mohr space ($begin:math:text$\\sigma\_n$end:math:text$–$begin:math:text$\\tau$end:math:text$);
-- the corresponding envelope in principal stress space ($begin:math:text$\\sigma\_3$end:math:text$–$begin:math:text$\\sigma\_1$end:math:text$);
+- the combined failure envelope in Mohr space ($\sigma_n$ - $\tau$);
+- the corresponding envelope in principal stress space ($\sigma_1$ - $\sigma_3$);
 - a table containing the calculated coordinates of the generated curves, which can be exported as CSV files.
 
 
@@ -124,7 +124,7 @@ Run:
 ```
 
 User inputs:
-The input values used in this section may be obtained directly from uniaxial compression (C_0) and direct or indirect tensile (T_0) tests.  however, when triaxial laboratory tests are available, the recommended workflow is:
+The input values used in this section may be obtained directly from uniaxial compression ($C_0$) and direct or indirect tensile ($T_0$) tests.  however, when triaxial laboratory tests are available, the recommended workflow is:
 
 1. Fit the Úcar criterion to the triaxial dataset.
 2. Obtain adjusted values of:
@@ -176,7 +176,7 @@ Run:
 
 This script:
 
-- imports triaxial test pairs (σ₃, σ₁);
+- imports triaxial test pairs ($\sigma_1$ - $\sigma_3$);
 - plots them against the combined envelope;
 - generates Mohr circles;
 - exports comparison figures and tables.
@@ -228,7 +228,7 @@ The script evaluates:
 Outputs include:
 
 ```text
-critical cooling ΔT
+critical cooling $\Delta T$
 failure mechanism
 stress path
 Mohr-circle evolution
@@ -255,7 +255,7 @@ This script calculates:
 where:
 
 - E = Young's modulus
-- αT = thermal expansion coefficient
+- $\alphaT$ = thermal expansion coefficient
 
 The resulting diagrams provide a rapid assessment of geothermal stimulation potential.
 
@@ -290,7 +290,8 @@ including:
 The formulation provides a continuous failure envelope across tensile and compressive regimes.
 
 ---
-Repository structure
+## Repository structure
+
 01  Generate combined NGC–Úcar envelope
 
 02  Compare with triaxial tests
