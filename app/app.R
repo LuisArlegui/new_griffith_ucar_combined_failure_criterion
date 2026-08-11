@@ -1,6 +1,7 @@
 # ============================================================
 # app.R
-# Interactive NGC + UC prototype
+# Interactive NGC + UC v2
+# Plots triaxial data
 # ============================================================
 
 library(shiny)
@@ -9,6 +10,12 @@ library(dplyr)
 library(DT)
 
 source("R/functions_NGC_UC.R")
+source("R/functions_io.R")
+
+
+# ============================================================
+# UI
+# ============================================================
 
 ui <- fluidPage(
   
@@ -17,6 +24,10 @@ ui <- fluidPage(
   sidebarLayout(
     
     sidebarPanel(
+      
+      # ------------------------------------------------------
+      # Input strengths
+      # ------------------------------------------------------
       
       h4("Input strengths"),
       
@@ -37,6 +48,11 @@ ui <- fluidPage(
       ),
       
       hr(),
+      
+      
+      # ------------------------------------------------------
+      # Curve density
+      # ------------------------------------------------------
       
       h4("Curve density"),
       
@@ -60,6 +76,11 @@ ui <- fluidPage(
       
       hr(),
       
+      
+      # ------------------------------------------------------
+      # UC truncation
+      # ------------------------------------------------------
+      
       h4("UC truncation"),
       
       checkboxInput(
@@ -70,13 +91,20 @@ ui <- fluidPage(
       
       numericInput(
         inputId = "ratio_limit",
-        label = HTML("&sigma;<sub>1</sub> / &sigma;<sub>3</sub> minimum ratio"),
+        label = HTML(
+          "&sigma;<sub>1</sub> / &sigma;<sub>3</sub> minimum ratio"
+        ),
         value = 3.4,
         min = 1.1,
         step = 0.1
       ),
       
       hr(),
+      
+      
+      # ------------------------------------------------------
+      # Plot colours
+      # ------------------------------------------------------
       
       h4("Plot colours"),
       
@@ -108,6 +136,11 @@ ui <- fluidPage(
       
       hr(),
       
+      
+      # ------------------------------------------------------
+      # Plot limits
+      # ------------------------------------------------------
+      
       h4("Plot limits"),
       
       checkboxInput(
@@ -116,30 +149,96 @@ ui <- fluidPage(
         value = FALSE
       ),
       
-      numericInput("x_sigma_tau_min", "σn-τ x min", value = -25),
-      numericInput("x_sigma_tau_max", "σn-τ x max", value = 160),
-      numericInput("y_sigma_tau_min", "σn-τ y min", value = 0),
-      numericInput("y_sigma_tau_max", "σn-τ y max", value = 120),
+      numericInput(
+        "x_sigma_tau_min",
+        "σn-τ x min",
+        value = -25
+      ),
       
-      numericInput("x_s3_s1_min", "σ3-σ1 x min", value = -40),
-      numericInput("x_s3_s1_max", "σ3-σ1 x max", value = 100),
-      numericInput("y_s3_s1_min", "σ3-σ1 y min", value = 0),
-      numericInput("y_s3_s1_max", "σ3-σ1 y max", value = 480),
+      numericInput(
+        "x_sigma_tau_max",
+        "σn-τ x max",
+        value = 160
+      ),
+      
+      numericInput(
+        "y_sigma_tau_min",
+        "σn-τ y min",
+        value = 0
+      ),
+      
+      numericInput(
+        "y_sigma_tau_max",
+        "σn-τ y max",
+        value = 120
+      ),
+      
+      numericInput(
+        "x_s3_s1_min",
+        "σ3-σ1 x min",
+        value = -40
+      ),
+      
+      numericInput(
+        "x_s3_s1_max",
+        "σ3-σ1 x max",
+        value = 100
+      ),
+      
+      numericInput(
+        "y_s3_s1_min",
+        "σ3-σ1 y min",
+        value = 0
+      ),
+      
+      numericInput(
+        "y_s3_s1_max",
+        "σ3-σ1 y max",
+        value = 480
+      ),
       
       hr(),
+      
+      
+      # ------------------------------------------------------
+      # Experimental data
+      # ------------------------------------------------------
+      
+      h4("Experimental data"),
+      
+      fileInput(
+        inputId = "triaxial_file",
+        label = "NGC-Ucar dataset",
+        accept = c(".csv")
+      ),
+      
+      verbatimTextOutput("dataset_info"),
+      
+      hr(),
+      
+      
+      # ------------------------------------------------------
+      # Downloads
+      # ------------------------------------------------------
       
       downloadButton(
         outputId = "download_combined_csv",
         label = "Download combined curve CSV"
       ),
       
-      br(), br(),
+      br(),
+      br(),
       
       downloadButton(
         outputId = "download_parameters_csv",
         label = "Download parameters CSV"
       )
     ),
+    
+    
+    # ========================================================
+    # Main panel
+    # ========================================================
     
     mainPanel(
       
@@ -148,9 +247,15 @@ ui <- fluidPage(
         tabPanel(
           "Plots",
           br(),
-          plotOutput("plot_sigma_tau", height = "600px"),
+          plotOutput(
+            "plot_sigma_tau",
+            height = "600px"
+          ),
           br(),
-          plotOutput("plot_sigma3_sigma1", height = "600px")
+          plotOutput(
+            "plot_sigma3_sigma1",
+            height = "600px"
+          )
         ),
         
         tabPanel(
@@ -168,12 +273,15 @@ ui <- fluidPage(
         tabPanel(
           "About",
           br(),
+          
           h4("Purpose"),
+          
           p(
             "This prototype calculates and displays the combined New Griffith Criterion ",
             "(NGC) and Ucar Criterion (UC) failure envelope from user-defined tensile ",
             "and compressive rock strengths."
           ),
+          
           p(
             "The calculation is based on the original Script 01, refactored into reusable ",
             "functions suitable for an interactive Shiny/Shinylive application."
@@ -184,15 +292,35 @@ ui <- fluidPage(
   )
 )
 
+
+# ============================================================
+# SERVER
+# ============================================================
+
 server <- function(input, output, session) {
+  
+  
+  # ----------------------------------------------------------
+  # NGC + UC calculation
+  # ----------------------------------------------------------
   
   result <- reactive({
     
     validate(
-      need(input$sigma_c > 0, "sigma_c must be positive."),
-      need(input$sigma_t < 0, "sigma_t must be negative."),
-      need(abs(input$sigma_t) < input$sigma_c,
-           "abs(sigma_t) must be lower than sigma_c.")
+      need(
+        input$sigma_c > 0,
+        "sigma_c must be positive."
+      ),
+      
+      need(
+        input$sigma_t < 0,
+        "sigma_t must be negative."
+      ),
+      
+      need(
+        abs(input$sigma_t) < input$sigma_c,
+        "abs(sigma_t) must be lower than sigma_c."
+      )
     )
     
     calculate_ngc_uc(
@@ -205,39 +333,115 @@ server <- function(input, output, session) {
     )
   })
   
+  
+  # ----------------------------------------------------------
+  # Experimental dataset
+  # ----------------------------------------------------------
+  
+  experimental_dataset <- reactive({
+    
+    req(input$triaxial_file)
+    
+    read_ngc_toolkit_dataset(
+      input$triaxial_file$datapath
+    )
+  })
+  
+  
+  # ----------------------------------------------------------
+  # Experimental dataset information
+  # ----------------------------------------------------------
+  
+  output$dataset_info <- renderText({
+    
+    if (is.null(input$triaxial_file)) {
+      return("No dataset loaded.")
+    }
+    
+    ds <- experimental_dataset()
+    
+    paste(
+      "Dataset :", ds$dataset_id,
+      "\nUnits   :", ds$units,
+      "\nTests   :", ds$n_tests
+    )
+  })
+  
+  
+  # ----------------------------------------------------------
+  # Plot limits
+  # ----------------------------------------------------------
+  
   sigma_tau_xlim <- reactive({
+    
     if (isTRUE(input$manual_limits)) {
-      c(input$x_sigma_tau_min, input$x_sigma_tau_max)
+      
+      c(
+        input$x_sigma_tau_min,
+        input$x_sigma_tau_max
+      )
+      
     } else {
+      
       NULL
     }
   })
+  
   
   sigma_tau_ylim <- reactive({
+    
     if (isTRUE(input$manual_limits)) {
-      c(input$y_sigma_tau_min, input$y_sigma_tau_max)
+      
+      c(
+        input$y_sigma_tau_min,
+        input$y_sigma_tau_max
+      )
+      
     } else {
+      
       NULL
     }
   })
+  
   
   sigma3_sigma1_xlim <- reactive({
+    
     if (isTRUE(input$manual_limits)) {
-      c(input$x_s3_s1_min, input$x_s3_s1_max)
+      
+      c(
+        input$x_s3_s1_min,
+        input$x_s3_s1_max
+      )
+      
     } else {
+      
       NULL
     }
   })
+  
   
   sigma3_sigma1_ylim <- reactive({
+    
     if (isTRUE(input$manual_limits)) {
-      c(input$y_s3_s1_min, input$y_s3_s1_max)
+      
+      c(
+        input$y_s3_s1_min,
+        input$y_s3_s1_max
+      )
+      
     } else {
+      
       NULL
     }
   })
   
+  
+  # ----------------------------------------------------------
+  # Plots
+  # ----------------------------------------------------------
+  
   output$plot_sigma_tau <- renderPlot({
+    
     plot_ngc_uc_sigma_tau(
       result = result(),
       xlim = sigma_tau_xlim(),
@@ -247,7 +451,9 @@ server <- function(input, output, session) {
     )
   })
   
+  
   output$plot_sigma3_sigma1 <- renderPlot({
+    
     plot_ngc_uc_sigma3_sigma1(
       result = result(),
       xlim = sigma3_sigma1_xlim(),
@@ -257,7 +463,13 @@ server <- function(input, output, session) {
     )
   })
   
+  
+  # ----------------------------------------------------------
+  # Tables
+  # ----------------------------------------------------------
+  
   output$parameters_table <- renderDT({
+    
     datatable(
       result()$parameters,
       rownames = FALSE,
@@ -268,7 +480,9 @@ server <- function(input, output, session) {
     )
   })
   
+  
   output$combined_table <- renderDT({
+    
     datatable(
       result()$curve_combined,
       rownames = FALSE,
@@ -279,8 +493,15 @@ server <- function(input, output, session) {
     )
   })
   
+  
+  # ----------------------------------------------------------
+  # Downloads
+  # ----------------------------------------------------------
+  
   output$download_combined_csv <- downloadHandler(
+    
     filename = function() {
+      
       paste0(
         "curve_combined_NGC_UC_sigma_c_",
         input$sigma_c,
@@ -289,7 +510,9 @@ server <- function(input, output, session) {
         ".csv"
       )
     },
+    
     content = function(file) {
+      
       write.csv(
         result()$curve_combined,
         file,
@@ -298,8 +521,11 @@ server <- function(input, output, session) {
     }
   )
   
+  
   output$download_parameters_csv <- downloadHandler(
+    
     filename = function() {
+      
       paste0(
         "parameters_NGC_UC_sigma_c_",
         input$sigma_c,
@@ -308,7 +534,9 @@ server <- function(input, output, session) {
         ".csv"
       )
     },
+    
     content = function(file) {
+      
       write.csv(
         result()$parameters,
         file,
@@ -317,5 +545,10 @@ server <- function(input, output, session) {
     }
   )
 }
+
+
+# ============================================================
+# Run application
+# ============================================================
 
 shinyApp(ui, server)
