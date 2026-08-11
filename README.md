@@ -76,13 +76,7 @@ Missing packages are automatically installed when required.
 
 ## Interactive Shiny application
 
-An interactive Shiny application is provided in the `app/` directory. The application complements the R scripts by allowing users to explore the combined NGC–Úcar failure criterion interactively.
-
-The application can be launched directly from RStudio or from the repository root using:
-
-```r
-shiny::runApp("app")
-```
+An interactive implementation of the proposed criterion is freely available through the NGC-Ucar Toolkit, an online Shiny application accessible at [https://…](https://019fef69-7a03-1091-0bb0-3788072a13c3.share.connect.posit.cloud/) . The source code is maintained in the accompanying GitHub repository.
 
 ### Input parameters
 
