@@ -280,17 +280,176 @@ ui <- fluidPage(
           "About",
           br(),
           
+          h3("NGC-Ucar Toolkit"),
+          
+          p(
+            strong("Version 2.3"),
+            " — interactive implementation of the combined New Griffith Criterion (NGC) ",
+            "and Ucar Criterion (UC) for brittle rock failure analysis."
+          ),
+          
+          hr(),
+          
           h4("Purpose"),
           
           p(
-            "This prototype calculates and displays the combined New Griffith Criterion ",
-            "(NGC) and Ucar Criterion (UC) failure envelope from user-defined tensile ",
+            "The NGC-Ucar Toolkit is an interactive application for generating and ",
+            "exploring the combined NGC + UC failure envelope from user-defined tensile ",
             "and compressive rock strengths."
           ),
           
           p(
-            "The calculation is based on the original Script 01, refactored into reusable ",
-            "functions suitable for an interactive Shiny/Shinylive application."
+            "Experimental triaxial data can also be imported and displayed together with ",
+            "the theoretical failure envelope, allowing direct visual comparison between ",
+            "measured data and the criterion."
+          ),
+          
+          hr(),
+          
+          h4("Basic workflow"),
+          
+          tags$ol(
+            tags$li(
+              "Enter the compressive strength ",
+              HTML("&sigma;<sub>c</sub>"),
+              " and tensile strength ",
+              HTML("&sigma;<sub>t</sub>"),
+              "."
+            ),
+            tags$li(
+              "Adjust curve density, UC truncation and plot options if required."
+            ),
+            tags$li(
+              "Optionally import an experimental dataset in NGC-Ucar Toolkit CSV format."
+            ),
+            tags$li(
+              "Inspect the failure envelopes in the Plots tab."
+            ),
+            tags$li(
+              "Review calculated parameters, combined-curve values and experimental data ",
+              "in the corresponding tables."
+            ),
+            tags$li(
+              "Export the calculated combined curve and parameter table as CSV files."
+            )
+          ),
+          
+          hr(),
+          
+          h4("Experimental data format"),
+          
+          p(
+            "Experimental datasets must follow the NGC-Ucar Toolkit CSV format:"
+          ),
+          
+          tags$pre(
+            "Line 1: Dataset identifier\n",
+            "Line 2: Units\n",
+            "Line 3: sigma3,sigma1\n",
+            "Line 4+: Experimental values"
+          ),
+          
+          p("Example:"),
+          
+          tags$pre(
+            "Pniowek Sandstone (Borecki et al., 1982)\n",
+            "MPa\n",
+            "sigma3,sigma1\n",
+            "-10.9,0.0\n",
+            "0.0,125.4\n",
+            "6.3,164.4\n",
+            "12.1,193.0"
+          ),
+          
+          p(
+            strong("Important: "),
+            "the Toolkit does not perform unit conversion. All stress values within the ",
+            "dataset and the strength parameters entered by the user must therefore use ",
+            "the same units."
+          ),
+          
+          hr(),
+          
+          h4("Outputs"),
+          
+          tags$ul(
+            tags$li(
+              HTML(
+                "Failure envelope in the &sigma;<sub>n</sub>-&tau; plane."
+              )
+            ),
+            tags$li(
+              HTML(
+                "Failure envelope in the &sigma;<sub>3</sub>-&sigma;<sub>1</sub> plane."
+              )
+            ),
+            tags$li(
+              "Calculated NGC and UC parameters."
+            ),
+            tags$li(
+              "Combined NGC + UC curve values."
+            ),
+            tags$li(
+              "Imported experimental data."
+            ),
+            tags$li(
+              "CSV export of calculated curves and parameters."
+            )
+          ),
+          
+          hr(),
+          
+          h4("Current capabilities"),
+          
+          tags$ul(
+            tags$li(
+              "Interactive modification of compressive and tensile strength parameters."
+            ),
+            tags$li(
+              "Automatic recalculation of the combined NGC + UC failure envelope."
+            ),
+            tags$li(
+              "Optional UC truncation using a ductile-transition limit."
+            ),
+            tags$li(
+              "Import and validation of experimental triaxial datasets."
+            ),
+            tags$li(
+              "Superposition of experimental data on the principal-stress plot."
+            )
+          ),
+          
+          hr(),
+          
+          h4("Software and reproducibility"),
+          
+          p(
+            "The application is written in R using Shiny. The underlying calculations are ",
+            "implemented as reusable R functions so that the scientific calculations are ",
+            "independent of the graphical interface."
+          ),
+          
+          p(
+            "Source code, reproducible examples and supplementary material are maintained ",
+            "in the associated GitHub and Zenodo repositories."
+          ),
+          
+          hr(),
+          
+          h4("Authors"),
+          
+          p(
+            "R. Ucar, L. E. Arlegui, N. Belandria and J. L. Simón."
+          ),
+          
+          hr(),
+          
+          h4("Status"),
+          
+          p(
+            "This version of the NGC-Ucar Toolkit accompanies the manuscript describing ",
+            "the combined NGC-Ucar failure criterion. Additional functionality is under ",
+            "development."
           )
         )
       )
