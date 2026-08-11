@@ -271,6 +271,12 @@ ui <- fluidPage(
         ),
         
         tabPanel(
+          "Experimental data",
+          br(),
+          DTOutput("experimental_table")
+        ),
+        
+        tabPanel(
           "About",
           br(),
           
@@ -453,14 +459,20 @@ server <- function(input, output, session) {
   
   
   output$plot_sigma3_sigma1 <- renderPlot({
-    
-    plot_ngc_uc_sigma3_sigma1(
-      result = result(),
-      xlim = sigma3_sigma1_xlim(),
-      ylim = sigma3_sigma1_ylim(),
-      color_ngc = input$color_ngc,
-      color_uc = input$color_uc
-    )
+      
+      plot_ngc_uc_sigma3_sigma1(
+        result = result(),
+        xlim = sigma3_sigma1_xlim(),
+        ylim = sigma3_sigma1_ylim(),
+        color_ngc = input$color_ngc,
+        color_uc = input$color_uc,
+        experimental_data =
+          if (is.null(input$triaxial_file)) {
+            NULL
+          } else {
+            experimental_dataset()$data
+          }
+      )
   })
   
   
@@ -492,7 +504,21 @@ server <- function(input, output, session) {
       )
     )
   })
-  
+  output$experimental_table <- renderDT({
+    
+    req(input$triaxial_file)
+    
+    ds <- experimental_dataset()
+    
+    datatable(
+      ds$data,
+      rownames = FALSE,
+      options = list(
+        pageLength = 20,
+        scrollX = TRUE
+      )
+    )
+  })
   
   # ----------------------------------------------------------
   # Downloads

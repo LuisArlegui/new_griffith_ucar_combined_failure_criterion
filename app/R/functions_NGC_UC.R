@@ -388,7 +388,8 @@ plot_ngc_uc_sigma3_sigma1 <- function(
     xlim = NULL,
     ylim = NULL,
     color_ngc = "blue",
-    color_uc = "orange"
+    color_uc = "orange",
+    experimental_data = NULL
 ) {
   
   curve_ngc <- result$curve_ngc
@@ -405,7 +406,11 @@ plot_ngc_uc_sigma3_sigma1 <- function(
     ylim <- c(0, 3 * sigma_c_adj)
   }
   
-  ggplot() +
+  # ----------------------------------------------------------
+  # Base failure-envelope plot
+  # ----------------------------------------------------------
+  
+  sigma3_sigma1_plot <- ggplot() +
     geom_line(
       data = curve_ngc,
       aes(x = sigma_3, y = sigma_1, color = branch),
@@ -417,7 +422,10 @@ plot_ngc_uc_sigma3_sigma1 <- function(
       linewidth = 1.2
     ) +
     scale_color_manual(
-      values = c("NGC" = color_ngc, "UC" = color_uc)
+      values = c(
+        "NGC" = color_ngc,
+        "UC" = color_uc
+      )
     ) +
     coord_fixed(
       ratio = 1,
@@ -432,4 +440,34 @@ plot_ngc_uc_sigma3_sigma1 <- function(
       color = "Criterion"
     ) +
     theme_gray()
+  
+  
+  # ----------------------------------------------------------
+  # Experimental data
+  # ----------------------------------------------------------
+  
+  if (!is.null(experimental_data)) {
+    
+    sigma3_sigma1_plot <-
+      sigma3_sigma1_plot +
+      geom_point(
+        data = experimental_data,
+        aes(
+          x = sigma3,
+          y = sigma1
+        ),
+        shape = 21,
+        fill = "white",
+        colour = "black",
+        stroke = 0.7,
+        size = 2.8
+      )
+  }
+  
+  
+  # ----------------------------------------------------------
+  # Return plot
+  # ----------------------------------------------------------
+  
+  return(sigma3_sigma1_plot)
 }
