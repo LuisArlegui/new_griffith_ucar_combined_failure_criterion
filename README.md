@@ -1,12 +1,22 @@
 # NGC–Úcar Failure Criterion Toolkit
 
 *Open-source implementation accompanying the manuscript submitted to the* **Journal of Structural Geology**.
+## 🚀 Launch the online application
+
+The **NGC-Ucar Toolkit** can be used directly from any modern web browser without installing R.
+
+**Online application**
+
+https://luisarlegui-ngc-ucar-toolkit.share.connect.posit.cloud/
+
+---
 
 [![R](https://img.shields.io/badge/R-%3E%3D4.2-blue)](https://www.r-project.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/status-pre--release-orange)](README.md#status)
 [![Technical Appendix](https://img.shields.io/badge/Zenodo-10.5281%2Fzenodo.21869784-blue)](https://doi.org/10.5281/zenodo.21869784)
 [![Paper DOI](https://img.shields.io/badge/Paper%20DOI-pending-lightgrey)](#citation)
+[![Online App](https://img.shields.io/badge/Launch-NGC--Ucar%20Toolkit-success)](https://luisarlegui-ngc-ucar-toolkit.share.connect.posit.cloud/)
 
 
 ---
@@ -32,7 +42,7 @@ The repository implements a combined rock-failure criterion integrating:
 
 The resulting envelope provides a continuous representation of rock failure from tensile conditions to high confinement.
 
-In addition to the reproducible R scripts, the repository includes an interactive Shiny application for generating and comparing NGC and Úcar failure envelopes in both Mohr and principal stress spaces.
+In addition to the reproducible R scripts, the repository includes the NGC-Ucar Toolkit, an interactive Shiny web application that allows users to generate the combined failure envelope, import experimental triaxial datasets, compare laboratory data with theoretical predictions, and export the calculated results.
 
 ---
 
@@ -41,13 +51,14 @@ In addition to the reproducible R scripts, the repository includes an interactiv
 The repository allows users to:
 
 - Generate complete NGC–Úcar failure envelopes.
-- Visualise the criterion in both principal stress ($\sigma_3–\sigma_1$) and Mohr ($\sigma_n–\tau$) spaces.
-- Export failure curves as CSV files.
-- Compare the criterion with laboratory triaxial tests.
+- Visualise the criterion in both principal stress (σ3–σ1) and Mohr (σn–τ) spaces.
+- Import experimental triaxial datasets.
+- Compare laboratory data with theoretical failure envelopes.
+- Export curves and parameter tables.
 - Analyse depth-dependent fracture domains.
 - Simulate geothermal reservoir stimulation by thermal cooling.
-- Calculate thermal failure boundaries for different thermoelastic parameters.
-- Explore the criterion interactively through the included Shiny application.
+- Calculate thermal failure boundaries.
+- Explore all calculations interactively through the online NGC-Ucar Toolkit.
 ---
 
 
@@ -76,7 +87,7 @@ Missing packages are automatically installed when required.
 
 ## Interactive Shiny application
 
-An interactive implementation of the proposed criterion is freely available through the NGC-Ucar Toolkit, an online Shiny application accessible at [https://…](https://019fef69-7a03-1091-0bb0-3788072a13c3.share.connect.posit.cloud/) . The source code is maintained in the accompanying GitHub repository.
+An interactive implementation of the proposed criterion is freely available through the NGC-Ucar Toolkit, an online Shiny application accessible at [https://…](https://luisarlegui-ngc-ucar-toolkit.share.connect.posit.cloud/) . The source code is maintained in the accompanying GitHub repository.
 
 ### Input parameters
 
@@ -89,6 +100,21 @@ The first section defines the uniaxial compressive strength ($C_0$) and the unia
 **Curve density**
 
 The second section controls the numerical resolution used to generate the NGC and Úcar envelopes. Increasing the number of points produces smoother curves and also increases the resolution of the CSV files that can be exported from the application.
+
+### Experimental datasets
+
+Experimental triaxial datasets can be imported directly into the application.
+
+Each CSV file follows the NGC-Ucar Toolkit format:
+
+```text
+Dataset identifier
+Units
+sigma3,sigma1
+Experimental values
+```
+
+
 
 **UC truncation**
 
@@ -106,6 +132,19 @@ The application generates:
 - the corresponding envelope in principal stress space ($\sigma_1$ - $\sigma_3$);
 - a table containing the calculated coordinates of the generated curves, which can be exported as CSV files.
 
+
+---
+## Example datasets
+
+The repository includes the four experimental triaxial datasets used in the manuscript examples.
+
+These datasets can be:
+
+- imported directly into the online app NGC-Ucar Toolkit,
+- analysed using the accompanying R scripts,
+- used to reproduce the figures presented in the paper.
+
+They are located in the `data/` directory.
 
 ---
 
@@ -288,19 +327,15 @@ The formulation provides a continuous failure envelope across tensile and compre
 ---
 ## Repository structure
 
-01  Generate combined NGC–Úcar envelope
+app/                 Interactive Shiny application
 
-02  Compare with triaxial tests
+R/                   Computational functions and example scripts
 
-03  Example 1 – Depth-dependent fracture domains
+data/                Experimental datasets
 
-04  Example 2 – Geothermal cooling
+examples/            Stand-alone application examples
 
-05  Example 3 – Thermal failure boundaries
-
-app/   Interactive Shiny application
-
-results/   Generated tables and figures
+results/             Generated figures and tables
 
 ---
 
@@ -315,7 +350,13 @@ A century after Griffith: towards a combined non-linear criterion for brittle fa
 Journal of Structural Geology (under review).
 
 Technical Appendix:
-https://doi.org/10.5281/zenodo.21869785
+https://doi.org/10.5281/zenodo.21869784
+
+GitHub repository
+https://github.com/LuisArlegui/new_griffith_ucar_combined_failure_criterion
+
+Online application
+https://luisarlegui-ngc-ucar-toolkit.share.connect.posit.cloud/
 
 ---
 
