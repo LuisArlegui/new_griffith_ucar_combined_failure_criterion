@@ -1,6 +1,6 @@
 # NGC–Úcar Failure Criterion Toolkit
 
-*Open-source implementation accompanying the manuscript submitted to the* **Journal of Structural Geology**.
+*Open-source implementation accompanying the manuscript in press in the* **Journal of Structural Geology**.
 ## 🚀 Launch the online application
 
 The **NGC-Ucar Toolkit** can be used directly from any modern web browser without installing R.
@@ -347,7 +347,7 @@ If you use this repository, please cite:
 
 A century after Griffith: towards a combined non-linear criterion for brittle failure.
 
-Journal of Structural Geology (under review).
+Journal of Structural Geology (in press).
 
 Technical Appendix:
 https://doi.org/10.5281/zenodo.21869784
