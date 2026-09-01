@@ -1,6 +1,7 @@
 # NGC–Úcar Failure Criterion Toolkit
 
-*Open-source implementation accompanying the manuscript in press in the* **Journal of Structural Geology**.
+*Open-source implementation accompanying the article published in the* **Journal of Structural Geology**.
+
 ## 🚀 Launch the online application
 
 The **NGC-Ucar Toolkit** can be used directly from any modern web browser without installing R.
@@ -13,9 +14,9 @@ https://luisarlegui-ngc-ucar-toolkit.share.connect.posit.cloud/
 
 [![R](https://img.shields.io/badge/R-%3E%3D4.2-blue)](https://www.r-project.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/status-pre--release-orange)](README.md#status)
+[![Status](https://img.shields.io/badge/status-stable-brightgreen)](#)
 [![Technical Appendix](https://img.shields.io/badge/Zenodo-10.5281%2Fzenodo.21869784-blue)](https://doi.org/10.5281/zenodo.21869784)
-[![Paper DOI](https://img.shields.io/badge/Paper%20DOI-pending-lightgrey)](#citation)
+[![Paper DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.jsg.2026.105782-blue)](https://doi.org/10.1016/j.jsg.2026.105782)
 [![Online App](https://img.shields.io/badge/Launch-NGC--Ucar%20Toolkit-success)](https://luisarlegui-ngc-ucar-toolkit.share.connect.posit.cloud/)
 
 
@@ -23,17 +24,19 @@ https://luisarlegui-ngc-ucar-toolkit.share.connect.posit.cloud/
 
 ## Overview
 
-This repository contains the R scripts and interactive Shiny application accompanying the manuscript:
+This repository contains the R scripts, experimental datasets, and interactive Shiny application accompanying the article:
 
 **A century after Griffith: towards a combined non-linear criterion for brittle failure**
 
 **Authors:**
 
-
 - Roberto Úcar
 - Luis Arlegui
 - Norly Belandria
 - José Luis Simón
+
+**Journal:** *Journal of Structural Geology*  
+**DOI:** https://doi.org/10.1016/j.jsg.2026.105782
 
 The repository implements a combined rock-failure criterion integrating:
 
@@ -341,21 +344,22 @@ results/             Generated figures and tables
 
 # Citation
 
-If you use this repository, please cite:
+If you use this repository or the NGC-Ucar Toolkit, please cite:
 
-Úcar, R., Arlegui, L., Belandria, N., & Simón, J.L.
+Úcar, R., Arlegui, L., Belandria, N., & Simón, J.L. (2026).  
+A century after Griffith: towards a combined non-linear criterion for brittle failure.  
+*Journal of Structural Geology*.  
+https://doi.org/10.1016/j.jsg.2026.105782
 
-A century after Griffith: towards a combined non-linear criterion for brittle failure.
+### Related resources
 
-Journal of Structural Geology (in press).
-
-Technical Appendix:
+**Technical Appendix**  
 https://doi.org/10.5281/zenodo.21869784
 
-GitHub repository
+**GitHub repository**  
 https://github.com/LuisArlegui/new_griffith_ucar_combined_failure_criterion
 
-Online application
+**Online NGC-Ucar Toolkit**  
 https://luisarlegui-ngc-ucar-toolkit.share.connect.posit.cloud/
 
 ---
