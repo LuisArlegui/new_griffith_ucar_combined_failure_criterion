@@ -1,4 +1,5 @@
-cff-version: 1.2.0
+version: "1.0.0"
+date-released: 2026-09-01
 message: "If you use the NGC-Ucar Failure Criterion Toolkit in your research, please cite the associated article."
 
 title: "NGC-Ucar Failure Criterion Toolkit"
