@@ -1,0 +1,51 @@
+cff-version: 1.2.0
+message: "If you use the NGC-Ucar Failure Criterion Toolkit in your research, please cite the associated article."
+
+title: "NGC-Ucar Failure Criterion Toolkit"
+type: software
+
+authors:
+  - family-names: "Úcar"
+    given-names: "Roberto"
+    orcid: "https://orcid.org/0000-0002-4432-2445"
+
+  - family-names: "Arlegui"
+    given-names: "Luis"
+    orcid: "https://orcid.org/0000-0001-5091-9398"
+
+  - family-names: "Belandria"
+    given-names: "Norly"
+    orcid: "https://orcid.org/0000-0002-9485-0860"
+
+  - family-names: "Simón"
+    given-names: "José Luis"
+    orcid: "https://orcid.org/0000-0003-1412-5245"
+
+repository-code: "https://github.com/LuisArlegui/new_griffith_ucar_combined_failure_criterion"
+url: "https://luisarlegui-ngc-ucar-toolkit.share.connect.posit.cloud/"
+license: MIT
+
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Úcar"
+      given-names: "Roberto"
+      orcid: "https://orcid.org/0000-0002-4432-2445"
+
+    - family-names: "Arlegui"
+      given-names: "Luis"
+      orcid: "https://orcid.org/0000-0001-5091-9398"
+
+    - family-names: "Belandria"
+      given-names: "Norly"
+      orcid: "https://orcid.org/0000-0002-9485-0860"
+
+    - family-names: "Simón"
+      given-names: "José Luis"
+      orcid: "https://orcid.org/0000-0003-1412-5245"
+
+  title: "A century after Griffith: Towards a combined non-linear criterion for brittle failure"
+  journal: "Journal of Structural Geology"
+  volume: "211"
+  year: 2026
+  doi: "10.1016/j.jsg.2026.105782"

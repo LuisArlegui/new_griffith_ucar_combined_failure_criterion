@@ -347,8 +347,8 @@ results/             Generated figures and tables
 If you use this repository or the NGC-Ucar Toolkit, please cite:
 
 Úcar, R., Arlegui, L., Belandria, N., & Simón, J.L. (2026).  
-A century after Griffith: towards a combined non-linear criterion for brittle failure.  
-*Journal of Structural Geology*.  
+A century after Griffith: Towards a combined non-linear criterion for brittle failure.  
+*Journal of Structural Geology*, **211**, 105782.  
 https://doi.org/10.1016/j.jsg.2026.105782
 
 ### Related resources
